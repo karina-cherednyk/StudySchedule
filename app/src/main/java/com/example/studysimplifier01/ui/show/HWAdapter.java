@@ -3,6 +3,8 @@ package com.example.studysimplifier01.ui.show;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -24,6 +26,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,6 +87,8 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         this.mainLayout = ((Activity)context).findViewById(R.id.hw_layout);
         this.myPagerAdapter = myPagerAdapter;
         this.t = new MyToast(context);
+        notificationManager = NotificationManagerCompat.from(context);
+        createNotificationChannel();
 
 
       viewModel.getPLessons(lessonID,minDate).observe((LifecycleOwner) context, particularLessons -> {
@@ -169,14 +176,18 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
 
         private void setChecked(boolean checked){
             if(checked){
-                layout.setBackgroundColor(ContextCompat.getColor(context,R.color.bp_secondary));
+                layout.setBackground(ContextCompat.getDrawable(context, R.drawable.select_item));
                 deleteButton.setColorFilter(ContextCompat.getColor(context,R.color.color_error));
                 completed = true;
             }
             else {
 
-                layout.setBackgroundColor(ContextCompat.getColor(context,R.color.color_error));
+                layout.setBackground(ContextCompat.getDrawable(context, R.drawable.error_item));
                 deleteButton.setColorFilter(ContextCompat.getColor(context,R.color.color_on_error));
+
+
+
+
                 completed = false;
             }
         }
@@ -206,7 +217,6 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                     et.setText(textTask);
             
                     et.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP,new int[]{0,8,0,8}));
-                    et.setTextAppearance(R.style.SmallTextSizeItalic);
                     et.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     taskLayout.addView(et);
                 }
@@ -222,7 +232,8 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                 int counter = 0;
                 for(final String fileName: audioUris){
                     counter++;
-                    final Button b = new Button(context);
+                    int buttonStyle = R.style.OutlinedButton;
+                    final Button b = new Button(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
                     b.setText(context.getString(R.string.play_record)+counter);
                     b.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP));
                     final int finalCounter = counter;
@@ -479,14 +490,33 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                 recorder.setOutputFile(fileName);
                 recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
                 recFile = fileName;
+
                 try {
                     recorder.prepare();
                     recorder.start();
                 } catch (IOException e) {
                     ok = false;
+                    return;
                 }
-                //TODO
-               // recordButton.setText(context.getString(R.string.recording));
+                if(recording != null) recording.setImageResource(R.drawable.record);
+                recording = recordButton;
+                recordButton.setImageResource(R.drawable.stop);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Values.NOTIFICATION_CHANNEL)
+                            .setContentTitle(context.getString(R.string.recording))
+                            .setContentText(context.getString(R.string.recording))
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .setOngoing(true)
+                            .setSmallIcon(R.mipmap.ic_launcher);
+
+                   try {
+                       notificationManager.notify(Values.NOTIFICATION_ID, builder.build());
+                   } catch (Exception e){
+                       t.toast(e);
+                   }
+                }
             }
             else {
                 start = true;
@@ -496,7 +526,10 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                 recorder.release();
                 recorder = null;
                 audios.add(fileName);
-                final Button b = new Button(context);
+
+                int buttonStyle = R.style.MyButtonStyle;
+                final Button b = new Button(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
+
                 b.setText(context.getString(R.string.play_record)+counter);
                 b.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP));
                 b.setOnClickListener(new View.OnClickListener() {
@@ -530,8 +563,9 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                     }
                 });
                 taskLayout.addView(b);
-                //TODO
-//                recordButton.setText(context.getString(R.string.stop_recording));
+                notificationManager.cancel(Values.NOTIFICATION_ID);
+                recording.setImageResource(R.drawable.record);
+                recording = null;
             }
         }
     };
@@ -551,6 +585,17 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         else res = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         return  res;
     }
+    private  NotificationManagerCompat notificationManager;
+    private ImageButton recording;
 
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel = new NotificationChannel(Values.NOTIFICATION_CHANNEL, Values.NOTIFICATION_CHANNEL, importance);
+            channel.setDescription("For audio recording");
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 }

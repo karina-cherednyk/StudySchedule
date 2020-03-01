@@ -10,16 +10,8 @@
         <item name="colorSecondary">@color/bp_secondary</item>
         <item name="colorSecondaryVariant">@color/bp_secondary_light</item>
         <item name="colorAccent">@color/bp_secondary</item>
+        <item name="colorSecondaryDark">@color/bp_secondary_dark</item>
 
-        <item name="android:colorBackground">@color/color_background</item>
-        <item name="colorSurface">?colorPrimaryVariant</item>
-        <item name="colorError">@color/color_error</item>
-
-        <item name="colorOnPrimary">@color/color_on_primary</item>
-        <item name="colorOnSecondary">@color/color_on_secondary</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-        <item name="colorOnSurface">@color/color_on_surface</item>
-        <item name="colorOnError">@color/color_on_error</item>
     </style>
     <style name="BlueBrown" parent="Base.MyTheme">
         <!--Material color attributes -->
@@ -29,16 +21,8 @@
         <item name="colorSecondary">@color/bb_secondary</item>
         <item name="colorSecondaryVariant">@color/bb_secondary_light</item>
         <item name="colorAccent">@color/bb_secondary</item>
+        <item name="colorSecondaryDark">@color/bb_secondary_dark</item>
 
-        <item name="android:colorBackground">@color/color_background</item>
-        <item name="colorSurface">?colorPrimaryVariant</item>
-        <item name="colorError">@color/color_error</item>
-
-        <item name="colorOnPrimary">@color/color_on_primary</item>
-        <item name="colorOnSecondary">@color/color_on_secondary</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-        <item name="colorOnSurface">@color/color_on_surface</item>
-        <item name="colorOnError">@color/color_on_error</item>
     </style>
     <style name="PurpleYellow" parent="Base.MyTheme">
         <!--Material color attributes -->
@@ -48,10 +32,26 @@
         <item name="colorSecondary">@color/py_secondary</item>
         <item name="colorSecondaryVariant">@color/py_secondary_light</item>
         <item name="colorAccent">@color/py_secondary</item>
+        <item name="colorSecondaryDark">@color/py_secondary_dark</item>
 
+    </style>
 
+    <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor" >?colorPrimaryDark</item>
+        <item name="backgroundTint">?colorSecondaryVariant</item>
+    </style>
+    <style name="MyAppBarStyle" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface">
+        <item name="android:backgroundTint">?colorSecondaryDark</item>
+    </style>
+
+    <!--Base custom theme which will be shared between both light and dark theme variants-->
+    <style name="Base.MyTheme" parent="Base.MaterialThemeBuilder">
+        <item name="buttonStyle">@style/MyButtonStyle</item>
+        <item name="android:textColorPrimary">@color/color_on_primary</item>
+        <item name="android:textColor">@color/color_on_primary</item>
+        <item name="android:navigationBarColor">?colorSecondary</item>
         <item name="android:colorBackground">@color/color_background</item>
-        <item name="colorSurface">?colorPrimaryVariant</item>
+        <item name="colorSurface">@color/color_surface</item>
         <item name="colorError">@color/color_error</item>
 
         <item name="colorOnPrimary">@color/color_on_primary</item>
@@ -59,9 +59,8 @@
         <item name="colorOnBackground">@color/color_on_background</item>
         <item name="colorOnSurface">@color/color_on_surface</item>
         <item name="colorOnError">@color/color_on_error</item>
-    </style>
-    <!--Base custom theme which will be shared between both light and dark theme variants-->
-    <style name="Base.MyTheme" parent="Base.MaterialThemeBuilder">
+        <item name="android:statusBarColor">@color/bb_secondary_dark</item>
+
 
 
         <!--Material type attributes-->

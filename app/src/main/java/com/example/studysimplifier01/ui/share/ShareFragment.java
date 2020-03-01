@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -40,6 +42,7 @@ public class ShareFragment extends Fragment {
         private Button uploadScheduleButton;
         private EditText scheduleNameEdit;
         private DaysViewModel viewModel;
+        private TextView scheduleNameText;
 
         private Button setScheduleButton;
 
@@ -67,15 +70,16 @@ public class ShareFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_share, container, false);
 
-        username = ((MainActivity)getActivity()).getUsername();
+        username = MongoAccess.getUsername();
         CUR_SCHEDULE =  getContext().getString(R.string.my_current_schedule);
 
 
         uploadScheduleButton = root.findViewById(R.id.upload_my_schedule_button);
         setScheduleButton = root.findViewById(R.id.set_schedule_button);
-        setScheduleButton.setEnabled(false);
 
         scheduleNameEdit = root.findViewById(R.id.schedule_name_edit);
+        scheduleNameText = root.findViewById(R.id.schedule_name_text);
+
         scheduleList = root.findViewById(R.id.schedule_list);
         shareList = root.findViewById(R.id.share_with_list);
         schedulesSpinner = root.findViewById(R.id.schedules_spinner);
@@ -86,6 +90,27 @@ public class ShareFragment extends Fragment {
             lessonsFetched = true;
             scheduleList.setAdapter(new LessonsAdapter(getContext(),lessons));
         });
+        LinkedList<String> labels = new LinkedList<>();
+        labels.add(CUR_SCHEDULE);
+        t = new MyToast(getContext());
+
+        if( username == null){
+            schedulesSpinner.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,labels));
+            schedulesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    scheduleList.setAdapter(new LessonsAdapter(getContext(),lessons));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) { }
+            });
+            scheduleNameText.setVisibility(View.GONE);
+            scheduleNameEdit.setVisibility(View.GONE);
+            root.findViewById(R.id.share_friends_layout).setVisibility(View.GONE);
+            setSetAction();
+            return root;
+        }
 
         MongoAccess.getFriends().onSuccessTask(list-> {
             friends = list;
@@ -94,14 +119,13 @@ public class ShareFragment extends Fragment {
             return MongoAccess.getFriendsSchedules();
         }).addOnSuccessListener(schedules -> {
             friendsSchedules = schedules;
-            LinkedList<String> labels = new LinkedList<>();
-            labels.add(CUR_SCHEDULE);
             for(Schedule schedule: schedules) {
                 if(schedule.getOwner_id().equals(MongoAccess.getId())) labels.add(getString(R.string.my_schedule)+schedule.getName());
                 else labels.add(getFriendNameById(schedule.getOwner_id())+": "+schedule.getName());
             }
-            schedulesSpinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, labels));
 
+
+            schedulesSpinner.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, labels));
 
             schedulesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -111,21 +135,14 @@ public class ShareFragment extends Fragment {
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
+                public void onNothingSelected(AdapterView<?> parent) { }
             });
-            setScheduleButton.setEnabled(true);
+            uploadScheduleButton.setEnabled(true);
 
         }).addOnFailureListener(e -> t.toast(e));
 
-
-
         setUploadAction();
         setSetAction();
-
-        t = new MyToast(getContext());
-
         return root;
     }
 
@@ -158,15 +175,8 @@ public class ShareFragment extends Fragment {
     }
 
     private void setUploadAction() {
-        if(username == null){
-            scheduleNameEdit.setText(R.string.add_username_first);
-            scheduleNameEdit.setEnabled(false);
-            uploadScheduleButton.setEnabled(false);
-            return;
-        }
         uploadScheduleButton.setOnClickListener(v -> {
             if(!lessonsFetched || !friendsFetched) return;
-
             String scheduleName = scheduleNameEdit.getText().toString();
             if(scheduleName.isEmpty()){
                 t.toast(getString(R.string.do_name_schedule));

@@ -5,9 +5,10 @@
     android:layout_height="wrap_content"
     android:columnCount="2"
     android:orientation="horizontal"
+
     >
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="@dimen/keyline_4"
         android:padding="@dimen/keyline_2"
         android:layout_width="wrap_content"
@@ -15,14 +16,15 @@
         android:text="Lesson"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         />
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="@dimen/keyline_4"
         android:padding="@dimen/keyline_2"
-        android:layout_marginStart="@dimen/keyline_8"
+        android:layout_marginStart="@dimen/keyline_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lesson"
         android:id="@+id/card_show_lesson"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
 
         />
     <TextView
@@ -34,11 +36,12 @@
         />
     <TextView
         android:padding="@dimen/keyline_2"
-        android:layout_marginStart="@dimen/keyline_8"
+        android:layout_marginStart="@dimen/keyline_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lesson"
         android:id="@+id/card_show_professor"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
         />
     <TextView
         android:padding="@dimen/keyline_2"
@@ -49,11 +52,12 @@
         />
     <TextView
         android:padding="@dimen/keyline_2"
-        android:layout_marginStart="@dimen/keyline_8"
+        android:layout_marginStart="@dimen/keyline_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lesson"
         android:id="@+id/card_show_classroom"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
         />
     <TextView
         android:padding="@dimen/keyline_2"
@@ -65,10 +69,11 @@
         />
     <TextView
         android:padding="@dimen/keyline_2"
-        android:layout_marginStart="@dimen/keyline_8"
+        android:layout_marginStart="@dimen/keyline_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lesson"
         android:id="@+id/card_show_time"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
         />
 </GridLayout>

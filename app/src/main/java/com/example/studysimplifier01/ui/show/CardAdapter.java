@@ -27,6 +27,7 @@ import com.example.studysimplifier01.main.Values;
 import com.example.studysimplifier01.roomDBModel.DaysViewModel;
 import com.example.studysimplifier01.roomDBModel.entities.Lesson;
 import com.example.studysimplifier01.roomDBModel.entities.ParticularLesson;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,7 +98,7 @@ class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        public CardView card;
+        public MaterialCardView card;
         public MyListView list;
         int position;
         TextView dayOfWeekView;
@@ -111,7 +112,6 @@ class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
             card = itemView.findViewById(R.id.cardview);
             list = itemView.findViewById(R.id.card_list);
             dayOfWeekView = itemView.findViewById(R.id.card_dayOfWeek);
-
         }
         private class MyArrayAdapter extends ArrayAdapter{
 
@@ -124,13 +124,12 @@ class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 Lesson lesson = ( Lesson) getItem(position);
+
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(resource, parent, false);
                     for (ParticularLesson pl : particularLessons) {
                         if (pl.lessonID == lesson.getLessonID() && !pl.completed) {
-                          //  convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_error));
-                           convertView.setBackground(ContextCompat.getDrawable(context,R.drawable.error_list));
-
+                           convertView.setBackground(ContextCompat.getDrawable(context, R.drawable.error_item));
                             break;
                         }
                     }
@@ -140,6 +139,7 @@ class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
                 TextView professorName = convertView.findViewById(R.id.card_show_professor);
                 TextView classroom = convertView.findViewById(R.id.card_show_classroom);
                 TextView time = convertView.findViewById(R.id.card_show_time);
+
 
                 lessonName.setText(lesson.getLesson());
                 professorName.setText(lesson.getProfessor());
@@ -156,11 +156,7 @@ class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
             list.setAdapter(adapter);
 
             if(lessons.get(position).get(0).getDayOfWeek() == curDayOfWeek) {
-                //TODO
-//                Resources.Theme theme = context.getTheme();
-//                TypedValue val = new TypedValue();
-//                theme.resolveAttribute(R.attr.colorPrimaryVariant, val, true);
-//                card.setBackgroundColor(ContextCompat.getColor(context, val.data));
+                card.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.select_item));
             }
             date = DateConverter.toDateStr(dm.addDays(firstDateOfWeek, lessons.get(position).get(0).getDayOfWeek()-1));
 

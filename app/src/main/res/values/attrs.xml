@@ -9,4 +9,5 @@
     <attr name="textColorForLight" format="reference"/>
     <attr name="appBarOverlay" format="reference"/>
     <attr name="actionBarColor" format="reference"/>
+    <attr name="colorSecondaryDark" format="reference"/>
 </resources>

@@ -153,5 +153,11 @@ public class MongoAccess {
         return schedules.find().into(new LinkedList<>());
     }
 
-
+    private static String username;
+    public static void setUserName(String username) {
+        username = username;
+    }
+    public static String getUsername(){
+        return username;
+    }
 }

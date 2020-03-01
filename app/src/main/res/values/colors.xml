@@ -2,9 +2,9 @@
 <resources>
 
     <!--selection controls.-->
-    <color name="bp_primary">#ffcdd2</color>
-    <color name="bp_primary_light">#ffffff</color>
-    <color name="bp_primary_dark">#cb9ca1</color>
+    <color name="bp_primary">#ff80ab</color>
+    <color name="bp_primary_light">#ffb2dd</color>
+    <color name="bp_primary_dark">#c94f7c</color>
     <color name="bp_secondary">#40c4ff</color>
     <color name="bp_secondary_light">#82f7ff</color>
     <color name="bp_secondary_dark">#0094cc</color>
@@ -32,6 +32,9 @@
     <color name="color_surface">#ffffff</color>
     <color name="color_error">#b00020</color>
     <color name="color_error_dark">#6B0015</color>
+
+    <color name="color_success">#66bb6a</color>
+    <color name="color_success_dark">#338a3e</color>
     <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
     <!--on which they appear.-->
     <color name="color_on_primary">#000000</color>
@@ -39,4 +42,5 @@
     <color name="color_on_background">#000000</color>
     <color name="color_on_surface">#000000</color>
     <color name="color_on_error">#ffffff</color>
+
 </resources>

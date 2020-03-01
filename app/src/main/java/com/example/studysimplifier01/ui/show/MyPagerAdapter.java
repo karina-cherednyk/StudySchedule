@@ -19,8 +19,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     private int  minDate, orDate;
     private String lessonName;
     private long lessonId;
+    private boolean online;
 
-    public MyPagerAdapter(FragmentManager fm, Context context,String lessonName, long lessonId, int minDate, int orDate) {
+    public MyPagerAdapter(FragmentManager fm, Context context,String lessonName, long lessonId, int minDate, int orDate, boolean online) {
         super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
         tabTitles  = new String[] {context.getString(R.string.my_hw), context.getString(R.string.shared_hw) };
@@ -28,10 +29,12 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         this.lessonId = lessonId;
         this.minDate = minDate;
         this.orDate = orDate;
+        this.online = online;
     }
 
     @Override public int getCount() {
-        return tabTitles.length;
+        if(online) return 2;
+        return 1;
     }
 
     PageFragment[] fragments = new PageFragment[2];

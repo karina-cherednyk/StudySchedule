@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/color_error_dark">
-
     <item
-        android:state_pressed="true"
+        android:state_pressed="false"
         android:drawable="@color/color_error"  />
-
 </ripple>

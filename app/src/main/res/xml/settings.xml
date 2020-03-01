@@ -17,8 +17,6 @@
         android:defaultValue="en"
         android:summary="Choose language"
         />
-<!--        android:icon="@drawable/ic_palette_purple_36dp"-->
-<!--        android:dialogIcon="@drawable/ic_palette_green_36dp"-->
 
 
 

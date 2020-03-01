@@ -56,7 +56,7 @@ public class PageFragment extends Fragment {
         if(page == 0) {
             DaysViewModel viewModel = new ViewModelProvider(this).get(DaysViewModel.class);
             adapter = new HWAdapter(getContext(), viewModel, myPagerAdapter, lessonId, lessonName, minDate, orDate);
-            ActivityCompat.requestPermissions(getActivity(),  permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+            requestPermissions(permissions,REQUEST_RECORD_AUDIO_PERMISSION);
         }
         else
             adapter = new CommonHWAdapter(getContext(), lessonName, minDate, orDate);
@@ -89,7 +89,6 @@ public class PageFragment extends Fragment {
         if(page!=0) return;
         switch (requestCode){
             case REQUEST_RECORD_AUDIO_PERMISSION:
-
                 ((HWAdapter)adapter).setAcceptAudio(grantResults[0] == PackageManager.PERMISSION_GRANTED);
                 break;
         }

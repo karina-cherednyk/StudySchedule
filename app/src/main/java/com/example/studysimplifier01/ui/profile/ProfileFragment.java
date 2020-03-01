@@ -39,8 +39,9 @@ public class ProfileFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        username = ((MainActivity)getActivity()).getUsername();
+        username = MongoAccess.getUsername();
 
+        t = new MyToast(getContext());
 
         logoutButton = root.findViewById(R.id.log_out_button);
         updateButton = root.findViewById(R.id.update_user);
@@ -48,12 +49,16 @@ public class ProfileFragment extends Fragment {
         findButton = root.findViewById(R.id.find_friend_button);
         friendEdit = root.findViewById(R.id.friend_username_edit);
 
-        setFindAction();
+        if(username == null){
+            root.findViewById(R.id.show_if_logged_layout).setVisibility(View.GONE);
+            root.findViewById(R.id.profile_error_text).setVisibility(View.VISIBLE);
+        }
+        else {
+            setFindAction();
+            setUpdateAction();
+        }
+
         setLogoutAction();
-        setUpdateAction();
-
-
-        t = new MyToast(getContext());
 
         return root;
     }

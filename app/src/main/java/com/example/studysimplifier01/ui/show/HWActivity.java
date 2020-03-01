@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.studysimplifier01.R;
-import com.example.studysimplifier01.main.MainActivity;
 import com.example.studysimplifier01.main.SetPreferences;
 import com.example.studysimplifier01.main.Values;
+import com.example.studysimplifier01.mongoDBModel.MongoAccess;
 import com.google.android.material.tabs.TabLayout;
 
 public class HWActivity extends AppCompatActivity {
@@ -40,7 +40,7 @@ public class HWActivity extends AppCompatActivity {
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(
-                new MyPagerAdapter(getSupportFragmentManager(), this, lessonName,lessonId,minDate,orDate));
+                new MyPagerAdapter(getSupportFragmentManager(), this, lessonName,lessonId,minDate,orDate, MongoAccess.getUsername() != null));
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);

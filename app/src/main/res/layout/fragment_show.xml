@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        style="?materialButtonOutlinedStyle"
+        style="?buttonStyle"
         android:id="@+id/date_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

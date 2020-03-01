@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private String username;
 
-    public String getUsername(){
-        return username;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         if(task.isSuccessful() && task.getResult()!=null) {
                             username = task.getResult().getUsername();
+                            MongoAccess.setUserName(username);
                             t.toast(getString(R.string.welcome_msg)+username);
                         }
                         else username = null;
