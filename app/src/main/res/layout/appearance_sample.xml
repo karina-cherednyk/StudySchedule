@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/appearance_image"
+        android:layout_width="240dp"
+        android:layout_height="420dp"/>
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/appearance_image"
+        app:layout_constraintLeft_toLeftOf="@id/appearance_lighttext"
+        app:layout_constraintRight_toRightOf="@id/appearance_lighttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dark_text"
+        android:background="@drawable/white_rect"
+        android:id="@+id/appearance_darktext"
+        style="@style/MediumTextSize"
+        />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/appearance_darktext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/light_text"
+        android:background="@drawable/black_rect"
+        android:id="@+id/appearance_lighttext"
+        style="@style/MediumTextSize"
+
+        />
+    <Button
+        app:layout_constraintTop_toBottomOf="@id/appearance_lighttext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/appearance_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/apply_this_style"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

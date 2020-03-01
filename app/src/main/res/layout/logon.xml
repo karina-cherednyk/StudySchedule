@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/keyline_3"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+
+<Button
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/sign_in"
+    android:id="@+id/sign_in_button"
+    style="@style/OutlinedButton"
+    />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/log_in"
+        android:id="@+id/log_in_button"
+        style="@style/OutlinedButton"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/log_in_anonymously"
+        android:id="@+id/log_in_anon_button"
+        style="@style/OutlinedButton"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reset_pass_button"
+        android:text="@string/reset_password"
+        style="@style/OutlinedButton"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_username"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
+            android:id="@+id/username_edit"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_email"
+        >
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:inputType="textEmailAddress"
+        android:id="@+id/email_edit"
+        />
+</com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_password"
+        >
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:inputType="textPassword"
+        android:id="@+id/password_edit"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/keyline_4"
+        android:layout_gravity="end"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:id="@+id/confirm_logon_button"
+        />
+
+
+</LinearLayout>

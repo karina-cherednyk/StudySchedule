@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+  >
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_2"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/hw_one_layout"
+            android:padding="@dimen/keyline_2"
+            >
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:id="@+id/hw_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/hw_completed_checkBox"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="Completed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/hw_one_task"
+                    android:hint="Enter task:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hw_one_task_layout"
+        android:orientation="vertical"
+                >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/keyline_4"
+        >
+        <ImageButton
+            android:id="@+id/hw_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/color_error"
+            />
+        <ImageButton
+            android:id="@+id/record_button"
+            android:src="@drawable/record"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:tint="@color/color_on_surface"
+            />
+
+        <ImageButton
+            android:id="@+id/pick_img_button"
+            android:layout_height="wrap_content"
+            android:src="@drawable/photo"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:tint="@color/color_on_surface"
+            />
+
+
+        <ImageButton
+            android:src="@drawable/share"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/share_button"
+            android:layout_weight="1"
+            android:tint="@color/bp_secondary"
+            />
+        <ImageButton
+            android:id="@+id/hw_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/done"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_weight="1"
+            android:tint="@color/bp_secondary"
+            />
+        </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

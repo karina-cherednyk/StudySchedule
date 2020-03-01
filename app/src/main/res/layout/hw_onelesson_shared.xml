@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_2"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/keyline_2"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/keyline_2"
+                >
+
+                <TextView
+                    android:layout_marginStart="@dimen/keyline_4"
+                    android:id="@+id/hw_share_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sdsad"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
+                  />
+
+                <TextView
+                    android:id="@+id/hw_share_date_of_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sdsad"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Caption"
+                    />
+
+                <TextView
+                    android:id="@+id/hw_share_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sdsad"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Caption"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/hw_share_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:text="sdsad"
+                android:layout_marginStart="@dimen/keyline_4"
+                 />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

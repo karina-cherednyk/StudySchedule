@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   android:layout_margin="@dimen/keyline_4"
+    >
+
+    <TextView
+        android:id="@+id/text_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/your_profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="@dimen/keyline_2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/change_username" >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/new_username_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_marginTop="@dimen/keyline_2"
+        android:id="@+id/update_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update" />
+
+    <View
+        android:layout_marginTop="@dimen/keyline_4"
+        android:layout_marginBottom="@dimen/keyline_4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <TextView
+        android:layout_marginTop="@dimen/keyline_4"
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/find_friends_by_username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="@dimen/keyline_2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/friend_s_username">
+
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/friend_username_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_marginTop="@dimen/keyline_2"
+        android:id="@+id/find_friend_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/find_friend" />
+    <View
+        android:layout_marginTop="@dimen/keyline_4"
+        android:layout_marginBottom="@dimen/keyline_4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <Button
+        android:layout_marginTop="@dimen/keyline_2"
+        android:id="@+id/log_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/bp_secondary"
+        android:text="@string/log_out" />
+
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/hw_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.show.HWActivity"
+    android:orientation="vertical"
+    android:padding="@dimen/keyline_2"
+    >
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
+        tabTextColor="?colorOnSurface"
+        tabSelectedTextColor="?colorPrimary"
+        tabIndicatorColor="?colorPrimary"
+        tabMode="scrollable" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/commitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hw_close_button" />
+
+
+</LinearLayout>

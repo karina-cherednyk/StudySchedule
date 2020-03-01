@@ -1,0 +1,72 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    </style>
+
+
+
+        <!--Components-->
+
+        <!--Bottom Sheets-->
+        <style name="ThemeOverlay.MyTheme.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+            <item name="android:windowIsFloating">false</item>
+            <item name="android:windowBackground">@android:color/transparent</item>
+<!--            <item name="android:windowAnimationStyle">@style/Animation.MyTheme.BottomSheet.Modal</item>-->
+            <item name="android:statusBarColor">@android:color/transparent</item>
+            <item name="bottomSheetStyle">@style/Widget.MyTheme.BottomSheet.Modal</item>
+            <item name="android:navigationBarColor">?colorSurface</item>
+            <item name="android:navigationBarDividerColor" tools:ignore="NewApi">@android:color/transparent</item>
+        </style>
+        <style name="Widget.MyTheme.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+            <item name="shapeAppearanceOverlay">?shapeAppearanceLargeComponent</item>
+        </style>
+
+        <!--Navigation Drawer-->
+        <style name="Widget.MyTheme.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+            <item name="itemTextAppearance">?textAppearanceBody2</item>
+        </style>
+
+
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">?textColorForDark</item>
+        <item name="android:textColorSecondary">?textColorForLight</item>
+    </style>
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="BigTextSize">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">serif</item>
+    </style>
+    <style name="MediumTextSize">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8sp</item>
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+    </style>
+    <style name="SmallTextSize">
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">8sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+    </style>
+    <style name="SmallTextSizeItalic">
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">8sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+    </style>
+    <style name="button" parent="SmallTextSize">
+        <item name="android:padding">12sp</item>
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:textColor">?textColorForDark</item>
+    </style>
+</resources>

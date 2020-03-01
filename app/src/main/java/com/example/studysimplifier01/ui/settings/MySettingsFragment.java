@@ -1,0 +1,124 @@
+package com.example.studysimplifier01.ui.settings;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
+
+import com.example.studysimplifier01.dateConvertion.WeekDayConverter;
+import com.example.studysimplifier01.main.Values;
+import com.example.studysimplifier01.main.MyToast;
+import com.example.studysimplifier01.R;
+import com.example.studysimplifier01.roomDBModel.DaysViewModel;
+import com.example.studysimplifier01.roomDBModel.entities.Lesson;
+
+import java.util.Calendar;
+import java.util.Locale;
+
+import static android.content.Context.ALARM_SERVICE;
+
+public class MySettingsFragment extends PreferenceFragmentCompat {
+    DaysViewModel viewModel;
+    MyToast t;
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.settings, rootKey);
+        t = new MyToast(getContext());
+        viewModel = new ViewModelProvider(this).get(DaysViewModel.class);
+    }
+
+    //"8:30-10:00","10:00-11:20","11:40-13:00","13:30-14:50","15:00-16:20"
+    SharedPreferences.OnSharedPreferenceChangeListener prefListener =
+            (prefs, key) -> {
+                if (key.equals(Values.ALARM)) {
+
+                    boolean on = prefs.getBoolean(key,false);
+
+                        viewModel.getLessons().observe(this, lessons -> {
+                            for( Lesson l : lessons )
+                                if(on)setClockAlarm(getContext(),l);
+                                else cancelClockAlarm(getContext(),l.getLessonID());
+                        });
+
+                }
+                else if (key.equals(Values.LANG)){
+                    t.toast("CHANGING LOCAL");
+                    String lang = prefs.getString(Values.LANG, "");
+                    Locale myLocale = new Locale(lang);
+                    Resources res = getActivity().getResources();
+                    DisplayMetrics dm = res.getDisplayMetrics();
+                    Configuration conf = res.getConfiguration();
+                    conf.locale = myLocale;
+                    res.updateConfiguration(conf, dm);
+                    Locale.setDefault(myLocale);
+                    getActivity().recreate();
+                }
+            };
+    @Override
+    public void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(prefListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(prefListener);
+    }
+
+
+    public static void setClockAlarm(Context context,Lesson lesson){
+
+        String lessonName = lesson.getLesson();
+        String interval = lesson.getTime();
+        int r = (int)lesson.getLessonID();
+        int dayOfWeek = lesson.getDayOfWeek() % 7 + 1;
+
+        int hours = Integer.parseInt(interval.substring(0,interval.indexOf(':')));
+        int minutes = Integer.parseInt(interval.substring(interval.indexOf(':')+1,interval.indexOf('-')));
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,hours);
+        calendar.set(Calendar.MINUTE,minutes);
+
+        int weekday = calendar.get(Calendar.DAY_OF_WEEK);
+            int days = dayOfWeek - weekday;
+            if(days<0) days +=7;
+            calendar.add(Calendar.DAY_OF_YEAR, days);
+
+
+        Intent myIntent = new Intent(context.getApplicationContext(), MyReceiver.class);
+        myIntent.putExtra(Values.RECEIVER_LESSON_NAME,lessonName);
+        myIntent.putExtra(Values.RECEIVER_INTERVAL,interval);
+        myIntent.putExtra(Values.RECEIVER_ID,r);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), r, myIntent,0);
+        AlarmManager alarmManager = (AlarmManager)context.getApplicationContext().getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+    }
+    public static void cancelClockAlarm(Context context,long lID){
+
+        int r = (int)lID;
+
+        Intent myIntent = new Intent(context.getApplicationContext(), MyReceiver.class);
+        myIntent.putExtra(Values.RECEIVER_ID,r);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), r, myIntent,0);
+        AlarmManager alarmManager = (AlarmManager)context.getApplicationContext().getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+    }
+}

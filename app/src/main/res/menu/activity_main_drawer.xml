@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/schedule">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_show"
+            android:icon="@drawable/schedule"
+            android:title="@string/show_schedule" />
+        <item
+            android:id="@+id/nav_edit"
+            android:icon="@drawable/edit"
+            android:title="@string/edit_schedule" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/share"
+            android:title="@string/share_schedule" />
+
+    </group>
+    </item>
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile"
+        android:title="@string/profile"
+        />
+    <item
+        android:id="@+id/nav_appearance"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/appearance"
+        />
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@drawable/help"
+        android:title="@string/help"
+        />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings"
+        />
+
+</menu>

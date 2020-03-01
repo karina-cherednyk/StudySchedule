@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Top level DayNight theme to be used in AndroidManifest.xml-->
+    <style name="BluePink" parent="Base.MyTheme">
+        <!--Material color attributes -->
+        <item name="colorPrimary">@color/bp_primary</item>
+        <item name="colorPrimaryVariant">@color/bp_primary_light</item>
+        <item name="colorPrimaryDark">@color/bp_primary_dark</item>
+        <item name="colorSecondary">@color/bp_secondary</item>
+        <item name="colorSecondaryVariant">@color/bp_secondary_light</item>
+        <item name="colorAccent">@color/bp_secondary</item>
+
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorSurface">?colorPrimaryVariant</item>
+        <item name="colorError">@color/color_error</item>
+
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="colorOnError">@color/color_on_error</item>
+    </style>
+    <style name="BlueBrown" parent="Base.MyTheme">
+        <!--Material color attributes -->
+        <item name="colorPrimary">@color/bb_primary</item>
+        <item name="colorPrimaryVariant">@color/bb_primary_light</item>
+        <item name="colorPrimaryDark">@color/bb_primary_dark</item>
+        <item name="colorSecondary">@color/bb_secondary</item>
+        <item name="colorSecondaryVariant">@color/bb_secondary_light</item>
+        <item name="colorAccent">@color/bb_secondary</item>
+
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorSurface">?colorPrimaryVariant</item>
+        <item name="colorError">@color/color_error</item>
+
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="colorOnError">@color/color_on_error</item>
+    </style>
+    <style name="PurpleYellow" parent="Base.MyTheme">
+        <!--Material color attributes -->
+        <item name="colorPrimary">@color/py_primary</item>
+        <item name="colorPrimaryVariant">@color/py_primary_light</item>
+        <item name="colorPrimaryDark">@color/py_primary_dark</item>
+        <item name="colorSecondary">@color/py_secondary</item>
+        <item name="colorSecondaryVariant">@color/py_secondary_light</item>
+        <item name="colorAccent">@color/py_secondary</item>
+
+
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorSurface">?colorPrimaryVariant</item>
+        <item name="colorError">@color/color_error</item>
+
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="colorOnError">@color/color_on_error</item>
+    </style>
+    <!--Base custom theme which will be shared between both light and dark theme variants-->
+    <style name="Base.MyTheme" parent="Base.MaterialThemeBuilder">
+
+
+        <!--Material type attributes-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MyTheme.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MyTheme.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.MyTheme.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
+
+        <!--Material shape attributes-->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent</item>
+
+        <!--Component styles-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
+        <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
+
+    </style>
+
+    <style name="Base.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">?colorControlHighlight</item>
+
+        <!--Remap legacy AppCompat attributes to MaterialComponent attributes-->
+    </style>
+    <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?colorPrimaryDark</item>
+    </style>
+</resources>

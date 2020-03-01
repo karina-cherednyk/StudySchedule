@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/keyline_3"
+    android:layout_marginEnd="@dimen/keyline_3"
+    android:layout_marginTop="@dimen/keyline_1"
+    android:layout_marginBottom="@dimen/keyline_1"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_4"
+        >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/toggleLessonButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_lesson"
+        style="@style/OutlinedButton"
+        />
+    <LinearLayout
+        android:id="@+id/edit_table_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/keyline_2"
+            android:hint="@string/lesson_edit"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lessonEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="textPersonName"
+              />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/keyline_2"
+
+            >
+
+            <AutoCompleteTextView
+                style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                android:id="@+id/professor_edit"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/teacher_edit"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/classroom_edit"
+            android:layout_marginTop="@dimen/keyline_2"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/classroomEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/keyline_2"
+            android:hint="@string/time_edit"
+            >
+
+            <AutoCompleteTextView
+                style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                android:id="@+id/timeEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+               />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/keyline_4"
+            android:hint="@string/day_of_week_edit"
+        />
+
+            <Spinner
+                android:id="@+id/daySpinner"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           >
+            <ImageButton
+                android:id="@+id/editDisposeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"
+                android:backgroundTint="@color/color_error"
+                android:layout_weight="1"
+                android:tint="@color/color_on_error"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageButton
+                android:id="@+id/editCommitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/color_on_secondary"
+                android:layout_weight="1"
+                android:src="@drawable/done"
+                android:backgroundTint="@color/bp_secondary"
+                />
+
+
+       </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

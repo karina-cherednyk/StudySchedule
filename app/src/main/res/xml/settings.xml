@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="alarm"
+        android:summary="@string/alarm_summary"
+        android:title="@string/alarm_title" />
+
+    <ListPreference
+        android:key="lang"
+        android:title="Language"
+        android:entries="@array/lang_name"
+        android:entryValues="@array/lang_value"
+        android:defaultValue="en"
+        android:summary="Choose language"
+        />
+<!--        android:icon="@drawable/ic_palette_purple_36dp"-->
+<!--        android:dialogIcon="@drawable/ic_palette_green_36dp"-->
+
+
+
+</PreferenceScreen>

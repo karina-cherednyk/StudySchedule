@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="mainImage" format="reference"/>
+    <attr name="lightColor" format="reference"/>
+    <attr name="darkColor" format="reference"/>
+    <attr name="textColor" format="reference"/>
+    <attr name="textColorForDark" format="reference"/>
+    <attr name="listItem" format="reference" />
+    <attr name="textColorForLight" format="reference"/>
+    <attr name="appBarOverlay" format="reference"/>
+    <attr name="actionBarColor" format="reference"/>
+</resources>

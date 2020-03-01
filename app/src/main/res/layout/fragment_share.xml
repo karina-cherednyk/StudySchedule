@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/keyline_3"
+    >
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:layout_margin="@dimen/keyline_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/name_your_schedule" />
+    <EditText
+        android:layout_margin="@dimen/keyline_2"
+        android:id="@+id/schedule_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/schedule_name"
+        />
+        <TextView
+
+            android:layout_margin="@dimen/keyline_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@string/lessons_list" />
+        <com.example.studysimplifier.ui.show.MyListView
+            android:layout_margin="@dimen/keyline_2"
+            android:id="@+id/schedule_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_4"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <TextView
+        android:layout_margin="@dimen/keyline_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_friends_to_share_with"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+
+    <com.example.studysimplifier01.ui.show.MyListView
+        android:id="@+id/share_with_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_margin="@dimen/keyline_2"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:id="@+id/upload_my_schedule_button"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_my_schedule" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_4"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <TextView
+        android:layout_margin="@dimen/keyline_2"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/get_schedule_from_your_friends" />
+
+    <Spinner
+        android:id="@+id/schedules_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/set_schedule_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_schedule" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>
