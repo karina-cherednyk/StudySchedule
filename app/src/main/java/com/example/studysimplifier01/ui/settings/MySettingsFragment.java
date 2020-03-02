@@ -74,7 +74,7 @@ public class MySettingsFragment extends PreferenceFragmentCompat {
         PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(prefListener);
     }
 
-
+    public static final int GAP = 5;
     public static void setClockAlarm(Context context,Lesson lesson){
 
         String lessonName = lesson.getLesson();
@@ -85,9 +85,15 @@ public class MySettingsFragment extends PreferenceFragmentCompat {
         int hours = Integer.parseInt(interval.substring(0,interval.indexOf(':')));
         int minutes = Integer.parseInt(interval.substring(interval.indexOf(':')+1,interval.indexOf('-')));
 
+
+
+        if(minutes - GAP <0){
+            minutes = 60 + minutes - GAP;
+            hours--;
+        }
+        else minutes-= GAP;
+
         AlarmManager alarmManager = (AlarmManager)context.getApplicationContext().getSystemService(ALARM_SERVICE);
-
-
 
 
         Intent myIntent = new Intent(context.getApplicationContext(), MyReceiver.class);

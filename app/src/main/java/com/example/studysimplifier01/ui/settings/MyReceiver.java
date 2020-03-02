@@ -31,23 +31,13 @@ private NotificationManagerCompat notificationManager;
 
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,Values.ALARM_CHANNEL)
+                    .setSmallIcon(R.mipmap.my_launcher)
                     .setContentTitle(intent.getStringExtra(Values.RECEIVER_LESSON_NAME))
                     .setContentText(context.getString(R.string.lesson_begins_soon)+intent.getStringExtra(Values.RECEIVER_INTERVAL))
                     .setOngoing(false)
                     .setSound(notificationSound)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setAutoCancel(false);
-
-//            Intent i = new Intent(context, MainActivity.class);
-//            PendingIntent pendingIntent =
-//                    PendingIntent.getActivity(
-//                            context,
-//                            intent.getIntExtra(Values.RECEIVER_ID,-1),
-//                            i,
-//                            PendingIntent.FLAG_ONE_SHOT
-//                    );
-//
-//            builder.setContentIntent(pendingIntent);
 
 
             notificationManager.notify(intent.getIntExtra(Values.RECEIVER_ID,-1), builder.build());

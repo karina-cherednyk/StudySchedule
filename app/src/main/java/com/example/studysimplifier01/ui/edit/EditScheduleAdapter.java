@@ -137,6 +137,12 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
             disposeButton.setOnClickListener(listListener);
         }
         private void bindAddView(){
+            toggle.setText(context.getString(R.string.add_new_lesson));
+            lessonEdit.setText("");
+            professorEdit.setText("");
+            classRoomEdit.setText("");
+            timeEdit.setText("");
+
             commitButton.setOnClickListener(addListener);
             disposeButton.setOnClickListener(addListener);
         }
