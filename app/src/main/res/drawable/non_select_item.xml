@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android" android:color="?colorPrimary">
+    <item
+        android:state_pressed="false"
+        android:drawable="?colorSurface"  />
+
+</ripple>

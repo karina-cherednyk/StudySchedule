@@ -68,12 +68,12 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
     private String lessonName;
     private int minDate;
     private MediaRecorder recorder;
-    private String recFile;
     private MediaPlayer player;
-    private String playFile;
     private MyPagerAdapter myPagerAdapter;
     private MyToast t;
-
+    private NotificationManagerCompat notificationManager;
+    private static SimpleDateFormat ft = new SimpleDateFormat("yyMMddhhmmssMs");
+    private String dir;
 
     public HWAdapter(Context context, DaysViewModel viewModel, MyPagerAdapter myPagerAdapter, long lessonID, String lessonName, int minDate, int orDate){
         this.context = context;
@@ -87,7 +87,8 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         this.mainLayout = ((Activity)context).findViewById(R.id.hw_layout);
         this.myPagerAdapter = myPagerAdapter;
         this.t = new MyToast(context);
-        notificationManager = NotificationManagerCompat.from(context);
+        this.notificationManager = NotificationManagerCompat.from(context);
+        this.dir = context.getExternalCacheDir().getAbsolutePath();
         createNotificationChannel();
 
 
@@ -166,23 +167,23 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
             pickImgButton = itemView.findViewById(R.id.pick_img_button);
             initialColor = layout.getSolidColor();
             recordButton = itemView.findViewById(R.id.record_button);
-            recordButton.setOnClickListener(recordLst);
+            recordButton.setOnClickListener(new RecordListener(recordButton));
 
             shareButton = itemView.findViewById(R.id.share_button);
-
+            if(MongoAccess.getUsername() == null) shareButton.setVisibility(View.GONE);
         }
 
 
 
         private void setChecked(boolean checked){
             if(checked){
-                layout.setBackground(ContextCompat.getDrawable(context, R.drawable.select_item));
+                layout.setBackgroundColor(ContextCompat.getColor(context, R.color.color_success));
                 deleteButton.setColorFilter(ContextCompat.getColor(context,R.color.color_error));
                 completed = true;
             }
             else {
 
-                layout.setBackground(ContextCompat.getDrawable(context, R.drawable.error_item));
+                layout.setBackgroundColor(ContextCompat.getColor(context, R.color.color_error));
                 deleteButton.setColorFilter(ContextCompat.getColor(context,R.color.color_on_error));
 
 
@@ -206,7 +207,6 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                 while (m.find()) imageUris.add(m.group(1));
                 m = audioPattern.matcher(task);
                 while (m.find()) audioUris.add(m.group(1));
-                System.out.println("AUDIO URIS "+audioUris);
 
                 //get text task
                 String textTask = task.replaceAll(imagePattern.pattern(),"").replaceAll(audioPattern.pattern(),"").trim();
@@ -229,44 +229,12 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                     im.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     taskLayout.addView(im);
                 }
-                int counter = 0;
                 for(final String fileName: audioUris){
-                    counter++;
-                    int buttonStyle = R.style.OutlinedButton;
+                    int buttonStyle = R.style.MyButtonStyle;
                     final Button b = new Button(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
-                    b.setText(context.getString(R.string.play_record)+counter);
+                    b.setText(context.getString(R.string.play_record));
                     b.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP));
-                    final int finalCounter = counter;
-                    b.setOnClickListener(new View.OnClickListener() {
-                        boolean play = true;
-                        private String name = fileName;
-                        private int c = finalCounter;
-                        @Override
-                        public void onClick(View v) {
-                            if(play){
-                                play = false;
-                                if(player!=null){
-                                    player.release();
-                                }
-                                player = new MediaPlayer();
-                                playFile = fileName;
-                                try {
-                                    player.setDataSource(name);
-                                    player.prepare();
-                                    player.start();
-                                    b.setText(context.getString(R.string.stop_record)+c);
-
-                                } catch (IOException e) { }
-                            }
-                            else{
-                                play = true;
-                                if(playFile!=fileName) return;
-                                b.setText(context.getString(R.string.play_record)+c);
-                                player.release();
-                                player = null;
-                            }
-                        }
-                    });
+                    b.setOnClickListener(new ListenListener(fileName,b));
                     taskLayout.addView(b);
                 }
 
@@ -465,113 +433,143 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
     private LinkedList<String> audios = new LinkedList<>();
 
 
-    private View.OnClickListener recordLst = new View.OnClickListener() {
-        private boolean start = true;
-        private SimpleDateFormat ft =new SimpleDateFormat("yyMMddhhmmssMs");
-        private String dir = context.getExternalCacheDir().getAbsolutePath();;
-        String fileName;
-        private int counter;
-        boolean ok = true;
 
-        @Override
-        public void onClick(View v) {
-            if(!audioPermission) return;
-            if(start){
-                start = false;
-                if(recorder != null && ok) {
+        private class RecordListener implements View.OnClickListener {
+
+
+            private String fileName;
+            private ImageButton button;
+
+
+            RecordListener(ImageButton button){
+                this.button = button;
+            }
+
+            @Override
+            public void onClick(View v) {
+                if(!audioPermission) {
+                    t.toast(context.getString(R.string.no_permission_for_audio));
+                    button.setEnabled(false);
+                }
+                if(recording != button){
+                    //previous record wasnt stopped
+                    if(recording != null) {
+                        recorder.stop();
+                        recorder.release();
+                        recording.setImageResource(R.drawable.record);
+                        recording = null;
+                        notificationManager.cancel(Values.RECORDING_ID);
+                    }
+                    recorder = new MediaRecorder();
+                    String datetime = ft.format(new Date());
+                    fileName = dir+"/"+datetime+".3gp";
+                    recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                    recorder.setOutputFile(fileName);
+                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+                    try {
+                        recorder.prepare();
+                        recorder.start();
+                    } catch (IOException e) {
+                        t.toast(e);
+                        return;
+                    }
+                    recording = recordButton;
+                    recordButton.setImageResource(R.drawable.stop);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Values.RECORDING_CHANNEL)
+                                .setContentTitle(context.getString(R.string.recording))
+                                .setContentText(context.getString(R.string.recording))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setOngoing(true)
+                                .setSmallIcon(R.mipmap.my_launcher);
+
+                        try {
+                            notificationManager.notify(Values.RECORDING_ID, builder.build());
+                        } catch (Exception e){
+                            t.toast(e);
+                        }
+                    }
+                }
+                else {
+
                     recorder.stop();
                     recorder.release();
-                }
-                recorder = new MediaRecorder();
-                String datetime = ft.format(new Date());
-                fileName = dir+"/"+datetime+".3gp";
-                recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                recorder.setOutputFile(fileName);
-                recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                recFile = fileName;
+                    recording.setImageResource(R.drawable.record);
+                    recording = null;
 
-                try {
-                    recorder.prepare();
-                    recorder.start();
-                } catch (IOException e) {
-                    ok = false;
-                    return;
+                    audios.add(fileName);
+
+                    int buttonStyle = R.style.MyButtonStyle;
+                    final Button b = new Button(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
+                    b.setText(context.getString(R.string.play_record));
+                    b.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP));
+                    b.setOnClickListener(new ListenListener(fileName,b));
+                    taskLayout.addView(b);
+
+                    notificationManager.cancel(Values.RECORDING_ID);
                 }
-                if(recording != null) recording.setImageResource(R.drawable.record);
-                recording = recordButton;
-                recordButton.setImageResource(R.drawable.stop);
+            }
+
+        }
+    }
+    private class ListenListener implements View.OnClickListener{
+        private String fileName;
+        private Button button;
+        ListenListener(String fileName, Button button){
+            this.fileName = fileName;
+            this.button = button;
+        }
+        @Override
+        public void onClick(View v) {
+            if(playing != button){
+                if(playing!=null){
+                    player.stop();
+                    player.release();
+                    playing.setText(context.getString(R.string.play_record));
+                    playing = null;
+                    notificationManager.cancel(Values.PLAYING_ID);
+                }
+                player = new MediaPlayer();
+                try {
+
+                    player.setDataSource(fileName);
+                    player.prepare();
+                    player.start();
+
+                } catch (IOException e) {t.toast(e); return;}
+                playing = button;
+                button.setText(context.getString(R.string.stop_record));
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Values.NOTIFICATION_CHANNEL)
-                            .setContentTitle(context.getString(R.string.recording))
-                            .setContentText(context.getString(R.string.recording))
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Values.PLAYING_CHANNEL)
+                            .setContentTitle(context.getString(R.string.playing))
+                            .setContentText(context.getString(R.string.playing))
                             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                             .setOngoing(true)
-                            .setSmallIcon(R.mipmap.ic_launcher);
+                            .setSmallIcon(R.mipmap.my_launcher);
 
-                   try {
-                       notificationManager.notify(Values.NOTIFICATION_ID, builder.build());
-                   } catch (Exception e){
-                       t.toast(e);
-                   }
+                    try {
+                        notificationManager.notify(Values.PLAYING_ID, builder.build());
+                    } catch (Exception e){
+                        t.toast(e);
+                    }
                 }
             }
-            else {
-                start = true;
-                if(!recFile.equals(fileName) || !ok) return;
-                counter++;
-                recorder.stop();
-                recorder.release();
-                recorder = null;
-                audios.add(fileName);
+            else{
+                player.stop();
+                player.release();
+                playing.setText(context.getString(R.string.play_record));
+                playing = null;
 
-                int buttonStyle = R.style.MyButtonStyle;
-                final Button b = new Button(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
-
-                b.setText(context.getString(R.string.play_record)+counter);
-                b.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP));
-                b.setOnClickListener(new View.OnClickListener() {
-                    boolean play = true;
-                    private String name = fileName;
-                    private int c = counter;
-                    @Override
-                    public void onClick(View v) {
-                        if(play){
-                            play = false;
-                         if(player!=null){
-                             player.release();
-                         }
-                            player = new MediaPlayer();
-                         playFile = fileName;
-                            try {
-                                player.setDataSource(name);
-                                player.prepare();
-                                player.start();
-                                b.setText(context.getString(R.string.stop_record)+c);
-
-                            } catch (IOException e) { }
-                        }
-                        else{
-                            play = true;
-                            if(playFile!=fileName) return;
-                            b.setText(context.getString(R.string.play_record)+c);
-                            player.release();
-                            player = null;
-                        }
-                    }
-                });
-                taskLayout.addView(b);
-                notificationManager.cancel(Values.NOTIFICATION_ID);
-                recording.setImageResource(R.drawable.record);
-                recording = null;
+                notificationManager.cancel(Values.PLAYING_ID);
             }
         }
-    };
-
     }
-
     private static  LinearLayout.LayoutParams getParamsInstance(String mode, int[] margins){
         LinearLayout.LayoutParams res;
         if(mode.equals(Values.LAYOUT_PARAMS_MODE_WRAP)) res =  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -585,16 +583,22 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         else res = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         return  res;
     }
-    private  NotificationManagerCompat notificationManager;
+
     private ImageButton recording;
+    private Button playing;
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
 
-            NotificationChannel channel = new NotificationChannel(Values.NOTIFICATION_CHANNEL, Values.NOTIFICATION_CHANNEL, importance);
+            NotificationChannel channel = new NotificationChannel(Values.RECORDING_CHANNEL, Values.RECORDING_CHANNEL, importance);
             channel.setDescription("For audio recording");
             notificationManager.createNotificationChannel(channel);
+
+            NotificationChannel  channel2 = new NotificationChannel(Values.PLAYING_CHANNEL, Values.PLAYING_CHANNEL, importance);
+            channel2.setDescription("For audio playing");
+            notificationManager.createNotificationChannel(channel2);
+
         }
     }
 

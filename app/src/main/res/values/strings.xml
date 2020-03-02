@@ -73,6 +73,8 @@
     <string name="play_record">Play record</string>
     <string name="stop_record">Stop record</string>
     <string name="recording">RECORDING...</string>
+    <string name="playing">PLAYING...</string>
+
     <string name="task_updated">Lesson task updated</string>
     <string name="lesson_status_updated">Particular lesson status is updated</string>
     <string name="lesson_task_updated">Particular lesson task is updated</string>
@@ -110,7 +112,6 @@
     <string name="add_new_lesson">Add new lesson</string>
     <string name="dark_text">Dark text</string>
     <string name="light_text">Light text</string>
-    <string name="apply_this_style">Apply this style</string>
     <string name="alarm_summary">Disable/enable notifications</string>
     <string name="alarm_title">Notifications</string>
     <string name="profile">Profile</string>
@@ -121,4 +122,7 @@
     <string name="your_profile">Your profile</string>
     <string name="lessons_list">Lessons of this schedule:</string>
     <string name="date">Date:</string>
+    <string name="no_permission_for_audio">Dont have permission to record audio</string>
+    <string name="apply_this_style">Apply this style</string>
+
 </resources>

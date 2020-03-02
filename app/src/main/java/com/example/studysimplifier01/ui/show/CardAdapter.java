@@ -127,12 +127,19 @@ class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>{
 
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(resource, parent, false);
+                    boolean error = false;
                     for (ParticularLesson pl : particularLessons) {
                         if (pl.lessonID == lesson.getLessonID() && !pl.completed) {
                            convertView.setBackground(ContextCompat.getDrawable(context, R.drawable.error_item));
+                           error = true;
                             break;
                         }
                     }
+                    if(!error && lesson.getDayOfWeek() == curDayOfWeek) {
+                        convertView.setBackground(ContextCompat.getDrawable(context, R.drawable.select_item));
+                    }
+                    else if(!error) convertView.setBackground(ContextCompat.getDrawable(context, R.drawable.non_select_item));
+
                 }
 
                 TextView lessonName = convertView.findViewById(R.id.card_show_lesson);

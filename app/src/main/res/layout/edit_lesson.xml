@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:text="@string/add_new_lesson"
         style="@style/OutlinedButton"
+        android:background="@drawable/non_select_item"
         />
     <LinearLayout
         android:id="@+id/edit_table_layout"

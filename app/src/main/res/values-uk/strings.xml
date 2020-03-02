@@ -72,6 +72,8 @@
     <string name="play_record">Відтворити запис</string>
     <string name="stop_record">Зупинити запис</string>
     <string name="recording">Запис триває...</string>
+    <string name="playing">Аудіо грає...</string>
+
     <string name="task_updated">Завдання оновлено</string>
     <string name="lesson_status_updated">Статус завдання оновлено</string>
     <string name="lesson_task_updated">Завдання оновлено</string>
@@ -109,7 +111,7 @@
     <string name="add_new_lesson">Додати нову пару</string>
     <string name="dark_text">Темний текст</string>
     <string name="light_text">Світлий текст</string>
-    <string name="apply_this_style">Використати цю тему</string>
+
     <string name="alarm_summary">Скасувати/ встановити повідомлення про початок пари</string>
     <string name="alarm_title">Повідомлення</string>
     <string name="profile">Профіль</string>
@@ -121,4 +123,8 @@
 
     <string name="your_profile">Ваш профіль</string>
     <string name="lessons_list">Список пар:</string>
+
+    <string name="date">Дата:</string>
+    <string name="no_permission_for_audio">Немає дозволу для запису аудіо</string>
+    <string name="apply_this_style">Використати цю тему</string>
 </resources>

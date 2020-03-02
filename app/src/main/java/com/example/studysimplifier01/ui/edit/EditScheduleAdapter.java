@@ -93,7 +93,6 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
         Lesson lesson;
         ImageButton disposeButton;
         ImageButton commitButton;
-        boolean visible = false;
         WeekDayConverter wdk;
 
 
@@ -115,10 +114,10 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
         public void bindView(int position){
             this.position = position-1;
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, wdk.days);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, wdk.days);
             daySpinner.setAdapter(adapter);
-            professorEdit.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, new ArrayList<>(professors)));
-            timeEdit.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, new ArrayList<>(times)));
+            professorEdit.setAdapter(new ArrayAdapter<>(context,  android.R.layout.simple_dropdown_item_1line, new ArrayList<>(professors)));
+            timeEdit.setAdapter(new ArrayAdapter<>(context,  android.R.layout.simple_dropdown_item_1line, new ArrayList<>(times)));
 
             if(this.position > -1)bindListView();
             else bindAddView();
@@ -176,9 +175,8 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
                     viewModel.deleteLesson(lesson.getLessonID());
                 }
                 else {
-                    if(visible) layout.setVisibility(View.GONE);
-                    else layout.setVisibility(View.VISIBLE);
-                    visible = !visible;
+                   if(layout.getVisibility() == View.VISIBLE) layout.setVisibility(View.GONE);
+                   else layout.setVisibility(View.VISIBLE);
                 }
 
             }
