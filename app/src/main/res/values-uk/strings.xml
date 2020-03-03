@@ -127,4 +127,23 @@
     <string name="date">Дата:</string>
     <string name="no_permission_for_audio">Немає дозволу для запису аудіо</string>
     <string name="apply_this_style">Використати цю тему</string>
+
+
+    <string name="show_page_when_click_on_lesson">Показати розклад, коли обрано пару</string>
+    <string name="dispose_changes_for_new_task_or_delete_old_task">Скасувати зміни для нового завдання або видалити старе</string>
+    <string name="start_recording_new_audio">Почати запис нового аудіо</string>
+    <string name="stop_recording_audio">Припинити запис аудіо</string>
+    <string name="add_image_to_task">Додати фото до завдання</string>
+    <string name="share_task_with_friends_who_have_lesson_with_the_same_name">Поділитися завданням з друзями, що мають таку ж пару</string>
+    <string name="commit_changes">Підтвердити зміни</string>
+    <string name="show_schedule_of_week_when_there_is_date">Показати розклад на неділю, в якій є обана дата</string>
+    <string name="_01_01_01">01/01/01</string>
+    <string name="select_one_of_3_possible_theme_options">Оберіть одну з трьох можливих тем</string>
+    <string name="add_friend_by_username">Знайти і додати друга за юзернеймом</string>
+    <string name="help_update_username">Додати або змінити юзернейм, щоб можна було ділитися розкладом і завданнями з друзями</string>
+    <string name="help_upload_lessoms">Завантажити розклад на сервер</string>
+    <string name="help_choose_schedule">Оберіть один із розкладів зі списку - перший - ваш поточний, інші - завантажені розклади друзів Оберіть, які пари з розкладу вам потрібно додати і натисніть на кнопку</string>
+    <string name="delete_lesson">Видалити пару</string>
+
+    <string name="wrong_format">Неправильний формат</string>
 </resources>

@@ -33,13 +33,6 @@ public abstract class DaysDatabase extends RoomDatabase {
                             // Wipes and rebuilds instead of migrating
                             // if no Migration object.
                             .fallbackToDestructiveMigration()
-                            .addCallback(  new RoomDatabase.Callback(){
-                                @Override
-                                public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                                    super.onOpen(db);
-                                    new populateDB(INSTANCE,context).execute();
-                                }
-                            })
                             .build();
                 }
             }

@@ -1,6 +1,8 @@
 package com.example.studysimplifier01.ui.edit;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studysimplifier01.R;
 import com.example.studysimplifier01.dateConvertion.WeekDayConverter;
+import com.example.studysimplifier01.main.MyToast;
 import com.example.studysimplifier01.roomDBModel.DaysViewModel;
 import com.example.studysimplifier01.roomDBModel.entities.Lesson;
 
@@ -39,12 +41,14 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
     private List<Lesson> list;
     private Set<String> times = new TreeSet<>();
     private Set<String> professors = new TreeSet<>();
+    private MyToast t;
 
 
     public EditScheduleAdapter(Context context, DaysViewModel viewModel) {
         this.inflater = LayoutInflater.from(context);;
         this.context = context;
         this.viewModel = viewModel;
+        this.t = new MyToast(context);
 
         viewModel.getLessons().observe((LifecycleOwner) context, lessons -> {
             list = lessons;
@@ -96,6 +100,8 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
         WeekDayConverter wdk;
 
 
+
+
         public EditViewHolder(@NonNull View itemView)  {
             super(itemView);
             lessonEdit = itemView.findViewById(R.id.lessonEdit);
@@ -108,13 +114,12 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
             disposeButton = itemView.findViewById(R.id.editDisposeButton);
             commitButton = itemView.findViewById(R.id.editCommitButton);
             wdk = new WeekDayConverter(context);
-
             toggle.setOnClickListener(listListener);
         }
         public void bindView(int position){
             this.position = position-1;
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, wdk.days);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, wdk.days);
             daySpinner.setAdapter(adapter);
             professorEdit.setAdapter(new ArrayAdapter<>(context,  android.R.layout.simple_dropdown_item_1line, new ArrayList<>(professors)));
             timeEdit.setAdapter(new ArrayAdapter<>(context,  android.R.layout.simple_dropdown_item_1line, new ArrayList<>(times)));
@@ -141,7 +146,7 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
             lessonEdit.setText("");
             professorEdit.setText("");
             classRoomEdit.setText("");
-            timeEdit.setText("");
+            timeEdit.setText("00:00-00:00");
 
             commitButton.setOnClickListener(addListener);
             disposeButton.setOnClickListener(addListener);
@@ -154,6 +159,12 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
                    String professor = professorEdit.getText().toString();
                    String room = classRoomEdit.getText().toString();
                    String time = timeEdit.getText().toString();
+                   if(time.length()<6 || time.charAt(2) != ':' || time.charAt(5) != '-') {
+                       t.toast(context.getString(R.string.wrong_format));
+                       timeEdit.setText("00:00-00:00");
+                       return;
+                   }
+
                    String dayOfWeek = daySpinner.getSelectedItem().toString();
                    viewModel.insert(new Lesson(lesson,professor,room,time,wdk.fromDayOfWeek(dayOfWeek)));
                 }
@@ -175,6 +186,11 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
                     String room = classRoomEdit.getText().toString();
                     String time = timeEdit.getText().toString();
                     String dayOfWeek = daySpinner.getSelectedItem().toString();
+                    if(time.length()<6 || time.charAt(2) != ':' || time.charAt(5) != '-') {
+                        t.toast(context.getString(R.string.wrong_format));
+                        timeEdit.setText("00:00-00:00");
+                        return;
+                    }
                     viewModel.update(lesson.getLessonID(),new Lesson(lessonName,professor,room,time,wdk.fromDayOfWeek(dayOfWeek)));
                 }
                 else if(v == disposeButton){
@@ -189,4 +205,5 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
         };
 
     }
+
 }

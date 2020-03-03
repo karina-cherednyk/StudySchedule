@@ -74,10 +74,11 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
     private NotificationManagerCompat notificationManager;
     private static SimpleDateFormat ft = new SimpleDateFormat("yyMMddhhmmssMs");
     private String dir;
+    private PageFragment fragment;
 
-    public HWAdapter(Context context, DaysViewModel viewModel, MyPagerAdapter myPagerAdapter, long lessonID, String lessonName, int minDate, int orDate){
+    public HWAdapter(Context context, PageFragment fragment, DaysViewModel viewModel, MyPagerAdapter myPagerAdapter, long lessonID, String lessonName, int minDate, int orDate){
         this.context = context;
-        inflater = LayoutInflater.from(context);
+        this.inflater = LayoutInflater.from(context);
         this.viewModel = viewModel;
         this.lessonID = lessonID;
         this.lessonName = lessonName;
@@ -89,6 +90,7 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         this.t = new MyToast(context);
         this.notificationManager = NotificationManagerCompat.from(context);
         this.dir = context.getExternalCacheDir().getAbsolutePath();
+        this.fragment = fragment;
         createNotificationChannel();
 
 
@@ -110,7 +112,7 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         return new HWViewHolder(inflater.inflate(R.layout.hw_onelesson,parent, false ));
     }
 
-    private LinkedList<Uri> uris = new LinkedList<>();
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -125,10 +127,10 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
     }
 
     public void addImage(Uri fileUri) {
-        uris.add(fileUri);
-        notifyItemChanged(pLessons.size());
+        imageRequestHolder.addImageUri(fileUri);
     }
 
+    private HWViewHolder imageRequestHolder;
     public void setAcceptAudio(boolean b) {
         audioPermission = b;
     }
@@ -151,8 +153,9 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         ImageButton pickImgButton;
         ImageButton recordButton;
         private int initialColor;
+        private String textTask="";
 
-
+        LinkedList<Uri> uris = new LinkedList<>();
 
 
         public HWViewHolder(@NonNull View itemView) {
@@ -171,6 +174,17 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
 
             shareButton = itemView.findViewById(R.id.share_button);
             if(MongoAccess.getUsername() == null) shareButton.setVisibility(View.GONE);
+
+            pickImgButton.setOnClickListener(v ->{
+                imageRequestHolder = HWViewHolder.this;
+                ImagePicker.Companion.with(fragment)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+                    });
+
+
         }
 
 
@@ -185,10 +199,6 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
 
                 layout.setBackgroundColor(ContextCompat.getColor(context, R.color.color_error));
                 deleteButton.setColorFilter(ContextCompat.getColor(context,R.color.color_on_error));
-
-
-
-
                 completed = false;
             }
         }
@@ -219,6 +229,7 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                     et.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP,new int[]{0,8,0,8}));
                     et.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     taskLayout.addView(et);
+                    this.textTask = textTask;
                 }
                 for(String uri: imageUris){
 
@@ -240,15 +251,14 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
 
 
 
-                if(taskLayout.getHeight()>mainLayout.getHeight()) taskLayout.setLayoutParams(getParamsInstance("MATCH"));
+                if(taskLayout.getHeight()>mainLayout.getHeight()) taskLayout.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_MATCH));
             }
         }
 
 
        @RequiresApi(api = Build.VERSION_CODES.M)
        private void bindPLesson(){
-            //cant add image via this view
-           pickImgButton.setVisibility(View.GONE);
+
            //so position is < pLessons.size() -> view is not last
            pLesson = pLessons.get(position);
 
@@ -273,6 +283,8 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                   t.toast(context.getString(R.string.lesson_status_updated));
                }
                else {
+                   audios = new LinkedList<>();
+                   uris = new LinkedList<>();
                    viewModel.update(pLesson.particularLessonID,pLesson.taskForToday+"\n\n"+text,completed);
                   t.toast(context.getString(R.string.lesson_task_updated));
                }
@@ -285,19 +297,12 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                        viewModel.deleteParticularLesson(pLesson.particularLessonID);
                        notifyItemRemoved(position);
                        Toast.makeText(context,"Task deleted",Toast.LENGTH_SHORT).show();
-                       System.out.println("REMOVED  "+pLessons+", "+getItemCount());
                    })
                    .setNegativeButton(android.R.string.no, null).show());
             shareButton.setVisibility(View.GONE);
        }
 
        private void bindingNewLesson(){
-           pickImgButton.setOnClickListener(v ->
-                   ImagePicker.Companion.with((Activity) context)
-                   .crop()	    			//Crop image(Optional), Check Customization for more option
-                   .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                   .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                   .start());
 
            //no need for checkbox view
            checkBox.setVisibility(View.GONE);
@@ -382,9 +387,7 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
 
            });
 
-           deleteButton.setOnClickListener(new View.OnClickListener() {
-               public void onClick(View v) {clearHolder(); uris.clear();audios.clear();}
-           });
+           deleteButton.setOnClickListener(v -> {clearHolder(); uris.clear();audios.clear();});
            for(Uri uri: uris){
                ImageView im = new ImageView(context);
                Glide.with(context).load(uri).into(im);
@@ -432,6 +435,17 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
         }
     private LinkedList<String> audios = new LinkedList<>();
 
+        public void addImageUri(Uri fileUri) {
+
+            uris.add(fileUri);
+
+            Uri myUri = Uri.fromFile(new File(fileUri.getPath()));
+            ImageView im = new ImageView(context);
+            Glide.with(context).load(myUri).into(im);
+            im.setLayoutParams(getParamsInstance(Values.LAYOUT_PARAMS_MODE_WRAP));
+            im.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            taskLayout.addView(im);
+        }
 
 
         private class RecordListener implements View.OnClickListener {

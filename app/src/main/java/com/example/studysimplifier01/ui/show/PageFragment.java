@@ -35,7 +35,9 @@ public class PageFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
 
+    public PageFragment(){
 
+    }
     public PageFragment(MyPagerAdapter myPagerAdapter, int page,String lessonName, long lessonId, int minDate, int orDate){
         this.myPagerAdapter = myPagerAdapter;
         this.page = page;
@@ -55,7 +57,7 @@ public class PageFragment extends Fragment {
 
         if(page == 0) {
             DaysViewModel viewModel = new ViewModelProvider(this).get(DaysViewModel.class);
-            adapter = new HWAdapter(getContext(), viewModel, myPagerAdapter, lessonId, lessonName, minDate, orDate);
+            adapter = new HWAdapter(getContext(), this, viewModel, myPagerAdapter, lessonId, lessonName, minDate, orDate);
             requestPermissions(permissions,REQUEST_RECORD_AUDIO_PERMISSION);
         }
         else
@@ -68,6 +70,7 @@ public class PageFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(page!=0) return;
+        System.out.println("HERE WITH IMAGE");
         if (resultCode == Activity.RESULT_OK)
             if (data != null) {
                 Uri fileUri = data.getData();

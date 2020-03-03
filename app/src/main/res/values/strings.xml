@@ -125,4 +125,21 @@
     <string name="no_permission_for_audio">Dont have permission to record audio</string>
     <string name="apply_this_style">Apply this style</string>
 
+    <string name="show_page_when_click_on_lesson">Show page, when click on lesson</string>
+    <string name="dispose_changes_for_new_task_or_delete_old_task">Dispose changes for new task or delete old task</string>
+    <string name="start_recording_new_audio">Start recording new audio</string>
+    <string name="stop_recording_audio">Stop recording audio</string>
+    <string name="add_image_to_task">Add image to task</string>
+    <string name="share_task_with_friends_who_have_lesson_with_the_same_name">Share task with friends who have lesson with the same name</string>
+    <string name="commit_changes">Commit changes</string>
+    <string name="show_schedule_of_week_when_there_is_date">Show schedule of week when there is date</string>
+    <string name="_01_01_01">01/01/01</string>
+    <string name="select_one_of_3_possible_theme_options">Select one of 3 possible theme options</string>
+    <string name="add_friend_by_username">Add friend by username</string>
+    <string name="help_update_username">Create or update username, so that you can have friends in this app and share tasks and schedules</string>
+    <string name="help_upload_lessoms">Upload lessons you selected to server, give name to this new schedule first</string>
+    <string name="help_choose_schedule">Choose one of schedules in list of available - first one is your current, others are friends` and yours uploaded Then choose lessons you want to download and press the button</string>
+    <string name="delete_lesson">Delete lesson</string>
+    <string name="wrong_format">Incorrect format</string>
+
 </resources>
