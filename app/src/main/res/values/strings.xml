@@ -141,5 +141,6 @@
     <string name="help_choose_schedule">Choose one of schedules in list of available - first one is your current, others are friends` and yours uploaded Then choose lessons you want to download and press the button</string>
     <string name="delete_lesson">Delete lesson</string>
     <string name="wrong_format">Incorrect format</string>
+    <string name="wrong_time">Incorrect time</string>
 
 </resources>

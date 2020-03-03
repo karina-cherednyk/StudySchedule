@@ -97,6 +97,8 @@ public class MySettingsFragment extends PreferenceFragmentCompat {
 
 
         Intent myIntent = new Intent(context.getApplicationContext(), MyReceiver.class);
+        myIntent.setAction(Values.ALARM);
+
         myIntent.putExtra(Values.RECEIVER_LESSON_NAME,lessonName);
         myIntent.putExtra(Values.RECEIVER_INTERVAL,interval);
         myIntent.putExtra(Values.RECEIVER_ID,ID);

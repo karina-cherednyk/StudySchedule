@@ -191,6 +191,14 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
                         timeEdit.setText("00:00-00:00");
                         return;
                     }
+                    else try{
+                        int h = Integer.parseInt(time.substring(0,2));
+                        int m = Integer.parseInt(time.substring(3,5));
+                    }catch (NumberFormatException e){
+                        t.toast(context.getString(R.string.wrong_time));
+                        timeEdit.setText("00:00-00:00");
+                        return;
+                    }
                     viewModel.update(lesson.getLessonID(),new Lesson(lessonName,professor,room,time,wdk.fromDayOfWeek(dayOfWeek)));
                 }
                 else if(v == disposeButton){

@@ -16,7 +16,7 @@
     <string name="dispose_edit">Відмінити зміни</string>
     <string name="commit_edit">Підтвердити зміни</string>
     <string name="day_of_week_edit">День тижня</string>
-    <string name="time_edit">Дата</string>
+    <string name="time_edit">Час</string>
     <string name="classroom_edit">Аудиорія</string>
     <string name="teacher_edit">Викладач</string>
     <string name="lesson_edit">Пара</string>
@@ -146,4 +146,5 @@
     <string name="delete_lesson">Видалити пару</string>
 
     <string name="wrong_format">Неправильний формат</string>
+    <string name="wrong_time">Неправильний час</string>
 </resources>
