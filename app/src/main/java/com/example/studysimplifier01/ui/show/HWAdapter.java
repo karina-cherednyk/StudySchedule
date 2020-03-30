@@ -553,6 +553,14 @@ public class HWAdapter extends RecyclerView.Adapter<HWAdapter.HWViewHolder> {
                     player.setDataSource(fileName);
                     player.prepare();
                     player.start();
+                    player.setOnCompletionListener(mp -> {
+                        player.stop();
+                        player.release();
+                        playing.setText(context.getString(R.string.play_record));
+                        playing = null;
+
+                        notificationManager.cancel(Values.PLAYING_ID);
+                    });
 
                 } catch (IOException e) {t.toast(e); return;}
                 playing = button;

@@ -93,7 +93,7 @@
     android:id="@+id/profile_error_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Log in not anonymously to set extra information"
+    android:text="@string/profile_error"
     android:visibility="gone"
     android:textColor="?colorError"
     />

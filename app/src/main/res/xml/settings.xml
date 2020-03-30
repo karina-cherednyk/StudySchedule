@@ -12,11 +12,11 @@
 
     <ListPreference
         android:key="lang"
-        android:title="Language"
+        android:title="@string/lang"
         android:entries="@array/lang_name"
         android:entryValues="@array/lang_value"
         android:defaultValue="en"
-        android:summary="Choose language"
+        android:summary="@string/choose_lang"
         />
 
 

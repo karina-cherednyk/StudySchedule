@@ -22,7 +22,7 @@
         android:text="@string/drawer_text"
         android:textAlignment="textStart"
         android:textColor="@color/color_on_secondary"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
 
 </LinearLayout>

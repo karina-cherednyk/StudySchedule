@@ -2,14 +2,20 @@ package com.example.studysimplifier01.main;
 
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.studysimplifier01.R;
@@ -20,6 +26,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.mongodb.stitch.core.auth.providers.anonymous.AnonymousCredential;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.Locale;
 
 
 public class LogonActivity extends AppCompatActivity {
@@ -66,6 +75,14 @@ public class LogonActivity extends AppCompatActivity {
         loginButton.setOnClickListener(x -> enableAuth());
         signinButton.setOnClickListener(x -> enableSignIn());
         resetPassButton.setOnClickListener(x->enableResetPass());
+
+        RadioButton uaButton = findViewById(R.id.ua_button);
+        RadioButton enButton = findViewById(R.id.en_button);
+
+        if(PreferenceManager.getDefaultSharedPreferences(this).getString(Values.LANG,"").equals("uk")) uaButton.setChecked(true);
+
+        uaButton.setOnClickListener(x-> changeLocal("uk"));
+        enButton.findViewById(R.id.en_button).setOnClickListener(x-> changeLocal("en"));
     }
 
     private void enableResetPass() {
@@ -120,7 +137,10 @@ public class LogonActivity extends AppCompatActivity {
             MongoAccess.getEmailPasswordClient().registerWithEmail(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) t.toast(getString(R.string.succesfully_sent_email));
                 else                     t.toast(getString(R.string.error_registering),task.getException());
+
             });
+
+
 
         }
     };
@@ -151,35 +171,41 @@ public class LogonActivity extends AppCompatActivity {
             String password = passwordEdit.getText().toString().trim();
             String email = emailEdit.getText().toString().trim();
 
-            if (( username.isEmpty() && email.isEmpty() )|| password.isEmpty()) {
+            if ((username.isEmpty() && email.isEmpty()) || password.isEmpty()) {
                 t.toast(getString(R.string.fill_e_or_u_and_pass));
                 return;
             }
-            if(  !username.isEmpty())
+            if (!username.isEmpty())
                 MongoAccess.accessAnon().onSuccessTask(
                         stitchUser -> MongoAccess.getUser(new Document(User.Fields.USERNAME, username))
                 )
-                .onSuccessTask(
-                        user ->  MongoAccess.logIn(user.getEmail(),password)
-                ).addOnSuccessListener( stitchUser -> {
+                        .onSuccessTask(
+                                user -> MongoAccess.logIn(user.getEmail(), password)
+                        ).addOnSuccessListener(stitchUser -> {
                     setResult(Activity.RESULT_OK);
                     finish();
                 }).addOnFailureListener(e -> {
-                    t.toast(getString(R.string.exception_w_authorization),e);
+                    t.toast(getString(R.string.exception_w_authorization), e);
                     MongoAccess.logout();
                 });
 
 
             else
-                MongoAccess.logIn(email,password).addOnCompleteListener(task ->{
-                    if(task.isSuccessful()){
+                MongoAccess.logIn(email, password).onSuccessTask(
+                        task -> MongoAccess.getUsername(MongoAccess.getId())).addOnSuccessListener(
+                        user -> {
+                            if (user == null)
+                                MongoAccess.insertOneUser(new User(new ObjectId(), MongoAccess.getId(), email, email));
+                        }).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
                         setResult(Activity.RESULT_OK);
                         finish();
                         return;
-                    }
-                    t.toast(getString(R.string.unable_login),task.getException());
+
+                    } else t.toast(getString(R.string.unable_login), task.getException());
                 });
         }
+
     };
 
 
@@ -213,4 +239,19 @@ public class LogonActivity extends AppCompatActivity {
     }
     private static String TAG = LogonActivity.class.getCanonicalName();
     private MyToast t = new MyToast(this);
+
+
+    private void changeLocal(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Locale.setDefault(myLocale);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putString(Values.LANG,lang);
+        editor.commit();
+        recreate();
+    }
 }

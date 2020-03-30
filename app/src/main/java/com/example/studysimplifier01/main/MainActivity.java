@@ -82,9 +82,10 @@ public class MainActivity extends AppCompatActivity {
             MongoAccess.getUser(whereQuery).addOnCompleteListener(task ->
                     {
                         if(task.isSuccessful() && task.getResult()!=null) {
+
                             username = task.getResult().getUsername();
                             MongoAccess.setUserName(username);
-                            t.toast(getString(R.string.welcome_msg)+username);
+                            t.toast(getString(R.string.welcome_msg)+" "+username);
                         }
                         else username = null;
                     }

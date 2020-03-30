@@ -154,8 +154,8 @@ public class MongoAccess {
     }
 
     private static String username;
-    public static void setUserName(String username) {
-        username = username;
+    public static void setUserName(String un) {
+        username = un;
     }
     public static String getUsername(){
         return username;

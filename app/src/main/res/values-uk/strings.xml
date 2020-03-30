@@ -147,4 +147,8 @@
 
     <string name="wrong_format">Неправильний формат</string>
     <string name="wrong_time">Неправильний час</string>
+
+    <string name="lang">Мова</string>
+    <string name="choose_lang">Оберіть мову</string>
+    <string name="profile_error">Увійдіть неанонімно, щоб налаштувати ваш профіль</string>
 </resources>

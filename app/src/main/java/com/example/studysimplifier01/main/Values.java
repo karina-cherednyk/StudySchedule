@@ -34,5 +34,6 @@ public class Values {
     public static final String RECEIVER_ID = "lesson id";
 
     public static final String ALARM = "alarm";
+    public static final String TIME_REGEX = "\\b\\d{2}:\\d{2}\\-\\d{2}:\\d{2}\\b";
 
 }

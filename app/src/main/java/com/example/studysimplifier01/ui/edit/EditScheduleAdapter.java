@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.studysimplifier01.R;
 import com.example.studysimplifier01.dateConvertion.WeekDayConverter;
 import com.example.studysimplifier01.main.MyToast;
+import com.example.studysimplifier01.main.Values;
 import com.example.studysimplifier01.roomDBModel.DaysViewModel;
 import com.example.studysimplifier01.roomDBModel.entities.Lesson;
 
@@ -159,11 +160,11 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
                    String professor = professorEdit.getText().toString();
                    String room = classRoomEdit.getText().toString();
                    String time = timeEdit.getText().toString();
-                   if(time.length()<6 || time.charAt(2) != ':' || time.charAt(5) != '-') {
-                       t.toast(context.getString(R.string.wrong_format));
-                       timeEdit.setText("00:00-00:00");
-                       return;
-                   }
+                    if( !checkTime(time)){
+                        t.toast(context.getString(R.string.wrong_time));
+                        timeEdit.setText("00:00-00:00");
+                        return;
+                    }
 
                    String dayOfWeek = daySpinner.getSelectedItem().toString();
                    viewModel.insert(new Lesson(lesson,professor,room,time,wdk.fromDayOfWeek(dayOfWeek)));
@@ -177,6 +178,20 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
 
             }
         };
+        private boolean checkTime(String time){
+            if(!time.matches(Values.TIME_REGEX)) return  false;
+            else try{
+                int h = Integer.parseInt(time.substring(0,2));
+                int m = Integer.parseInt(time.substring(3,5));
+                if(h<0 || h>56 || m<0 || m>59) {
+                    return false;
+                }
+            }catch (NumberFormatException e){
+                return false;
+            }
+            return true;
+        }
+
         View.OnClickListener listListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,15 +201,7 @@ public class EditScheduleAdapter extends RecyclerView.Adapter<EditScheduleAdapte
                     String room = classRoomEdit.getText().toString();
                     String time = timeEdit.getText().toString();
                     String dayOfWeek = daySpinner.getSelectedItem().toString();
-                    if(time.length()<6 || time.charAt(2) != ':' || time.charAt(5) != '-') {
-                        t.toast(context.getString(R.string.wrong_format));
-                        timeEdit.setText("00:00-00:00");
-                        return;
-                    }
-                    else try{
-                        int h = Integer.parseInt(time.substring(0,2));
-                        int m = Integer.parseInt(time.substring(3,5));
-                    }catch (NumberFormatException e){
+                    if( !checkTime(time)){
                         t.toast(context.getString(R.string.wrong_time));
                         timeEdit.setText("00:00-00:00");
                         return;
